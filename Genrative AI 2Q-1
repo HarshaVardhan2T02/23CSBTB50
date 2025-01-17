@@ -1,0 +1,82 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyOjlnn7pzMScmCUZiEiIaEg",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/HarshaVardhan2T02/23CSBTB50/blob/main/Genrative%20AI%202Q-1\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "code",
+      "execution_count": 1,
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "icmms2cdtVEH",
+        "outputId": "00eb5b8b-8f85-48e5-ffcd-19d027e0ae04"
+      },
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "Optimal number of A to produce: 2.0\n",
+            "Optimal number of B to produce: 3.0\n",
+            "Maximum profit: 27.0\n"
+          ]
+        }
+      ],
+      "source": [
+        "from scipy.optimize import linprog\n",
+        "\n",
+        "# Coefficients for the objective function (negative for maximization)\n",
+        "c = [-6, -5]\n",
+        "\n",
+        "# Coefficients for the inequality constraints\n",
+        "A = [\n",
+        "    [1, 1],   # Milk constraint\n",
+        "    [3, 2]    # Choco constraint\n",
+        "]\n",
+        "\n",
+        "# Right-hand side of the inequality constraints\n",
+        "b = [5, 12]\n",
+        "\n",
+        "# Bounds for variables (non-negativity)\n",
+        "x0_bounds = (0, None)  # A >= 0\n",
+        "x1_bounds = (0, None)  # B >= 0\n",
+        "\n",
+        "# Solve the linear programming problem\n",
+        "result = linprog(c, A_ub=A, b_ub=b, bounds=[x0_bounds, x1_bounds], method='highs')\n",
+        "\n",
+        "# Display the results\n",
+        "if result.success:\n",
+        "    print(f\"Optimal number of A to produce: {result.x[0]}\")\n",
+        "    print(f\"Optimal number of B to produce: {result.x[1]}\")\n",
+        "    print(f\"Maximum profit: {-result.fun}\")\n",
+        "else:\n",
+        "    print(\"No solution found!\")\n"
+      ]
+    }
+  ]
+}
